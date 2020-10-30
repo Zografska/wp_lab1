@@ -20,6 +20,8 @@ public class ConfirmationInfoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getSession().getAttribute("color")==null)
+            resp.sendRedirect("/*");
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
         webContext.setVariable("color", req.getSession().getAttribute("color"));
         webContext.setVariable("size", req.getSession().getAttribute("size"));
@@ -27,6 +29,7 @@ public class ConfirmationInfoServlet extends HttpServlet {
         webContext.setVariable("clientAddress", req.getParameter("clientAddress"));
         webContext.setVariable("ipAddress",req.getRemoteHost());
         webContext.setVariable("agent",req.getHeader("User-Agent"));
+        req.getSession().invalidate();
         springTemplateEngine.process("confirmationInfo.html",webContext,resp.getWriter());
     }
 }

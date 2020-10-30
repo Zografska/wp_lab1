@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "balloon-servlet", urlPatterns = "/servlet")
+@WebServlet(name = "balloon-servlet", urlPatterns = "/*")
 public class BalloonServlet extends HttpServlet {
 
      BalloonServiceImpl balloonService;

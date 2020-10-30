@@ -20,6 +20,8 @@ public class BalloonOrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getSession().getAttribute("color")==null)
+            resp.sendRedirect("/*");
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
         String size = req.getParameter("size");
         webContext.setVariable("size", size);

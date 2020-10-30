@@ -26,8 +26,6 @@ public class SelectBalloonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
         String color = req.getParameter("color");
-        if (color==null || color.isEmpty())
-            resp.sendRedirect("/servlet");
         req.getSession().setAttribute("color",color);
         webContext.setVariable("color", color);
         springTemplateEngine.process("selectBalloonSize.html",webContext,resp.getWriter());
