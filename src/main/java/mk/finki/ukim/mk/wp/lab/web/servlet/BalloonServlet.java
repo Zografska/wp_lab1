@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.wp.lab.web;
+package mk.finki.ukim.mk.wp.lab.web.servlet;
 
 import mk.finki.ukim.mk.wp.lab.service.BalloonService;
 import mk.finki.ukim.mk.wp.lab.service.impl.BalloonServiceImpl;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "balloon-servlet", urlPatterns = "/*")
+@WebServlet(name = "balloon-servlet", urlPatterns = "/b")
 public class BalloonServlet extends HttpServlet {
 
      BalloonServiceImpl balloonService;

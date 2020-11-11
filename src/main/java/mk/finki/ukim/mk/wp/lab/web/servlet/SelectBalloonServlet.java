@@ -1,5 +1,6 @@
-package mk.finki.ukim.mk.wp.lab.web;
+package mk.finki.ukim.mk.wp.lab.web.servlet;
 
+import mk.finki.ukim.mk.wp.lab.service.impl.BalloonServiceImpl;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -9,25 +10,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.http.HttpClient;
 
-@WebServlet(name = "order-servlet", urlPatterns = "/BalloonOrder.do")
-public class BalloonOrderServlet extends HttpServlet {
+@WebServlet(name = "select-balloon-servlet",urlPatterns = "/selectBalloon")
+public class SelectBalloonServlet extends HttpServlet {
+
     private final SpringTemplateEngine springTemplateEngine;
 
-    public BalloonOrderServlet(SpringTemplateEngine springTemplateEngine) {
+    public SelectBalloonServlet(SpringTemplateEngine springTemplateEngine) {
+
         this.springTemplateEngine = springTemplateEngine;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getSession().getAttribute("color")==null)
-            resp.sendRedirect("/*");
-        WebContext webContext = new WebContext(req,resp, req.getServletContext());
-        String size = req.getParameter("size");
-        webContext.setVariable("size", size);
 
-        webContext.setVariable("color",req.getSession().getAttribute("color"));
-        req.getSession().setAttribute("size",size);
-        springTemplateEngine.process("deliveryInfo.html",webContext,resp.getWriter());
+        WebContext webContext = new WebContext(req,resp, req.getServletContext());
+
+        String color = req.getParameter("color");
+        req.getSession().setAttribute("color",color);
+
+        webContext.setVariable("color", color);
+        springTemplateEngine.process("selectBalloonSize.html",webContext,resp.getWriter());
     }
 }

@@ -3,9 +3,11 @@ package mk.finki.ukim.mk.wp.lab.repository;
 
 import mk.finki.ukim.mk.wp.lab.bootstrap.DataHolder;
 import mk.finki.ukim.mk.wp.lab.model.Balloon;
+import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -22,5 +24,15 @@ public class BalloonRepository {
                         balloon.getDescription()
                                 .contains(searchText))
                 .collect(Collectors.toList());
+    }
+    public Balloon saveOrUpdate(Balloon balloon){
+        DataHolder.balloonList.add(balloon);
+        return balloon;
+    }
+    public void deleteBalloon(Long id){
+        DataHolder.balloonList.removeIf(balloon -> balloon.getId().equals(id));
+    }
+    public Optional<Balloon> getBalloonById(Long id){
+        return DataHolder.balloonList.stream().filter(balloon -> balloon.getId().equals(id)).findFirst();
     }
 }

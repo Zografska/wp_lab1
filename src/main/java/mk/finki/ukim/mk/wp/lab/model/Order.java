@@ -1,5 +1,8 @@
 package mk.finki.ukim.mk.wp.lab.model;
 
+import lombok.Data;
+
+@Data
 public class Order {
     String balloonColor;
     String balloonSize;

@@ -16,18 +16,36 @@
 <main>
     <h2>Your Balloons</h2>
     <ul>
-        <li th:each="balloon: ${balloons}"><th:block th:text="${balloon.getName()}"/> (<th:block th:text="${balloon.getDescription()}"/>)</li>
+        <li th:each="balloon: ${balloons}">
+            <th:block th:text="${balloon.getName()}"/> (<th:block th:text="${balloon.getDescription()}"/>)
+            <br></br>Manufacturer: <th:block th:text="${balloon.getManufacturer().getName()}"/>
+            <form th:action="@{'/balloons/delete/{id}' (id=${balloon.getId()})}" th:method="DELETE">
+                <button th:text="Delete"  type="submit">Delete</button>
+            </form>
+            <form th:action="@{'/balloons/edit-form/{id}' (id=${balloon.getId()})}" th:method="POST">
+                <button th:text="Edit"  type="submit">Edit Balloon</button>
+            </form>
+        </li>
     </ul>
+    <a type="button" class="btn btn-primary" href="/balloons/add">Add a Balloon</a>
 </main>
-
+<form th:method="POST"  th:action="@{/searchBalloon}">
+<input name="search" type="text" >
+<input type="submit"></button>
+</form>
     <h2>Choose balloon color:</h2>
     <form th:action="@{/selectBalloon}" th:method="POST">
         <input type="radio" name="color" value="Red Balloon"> Red Balloon<br/>
         <input type="radio" name="color" value="Green Balloon"> Green Balloon<br/>
         <input type="radio" name="color" value="Yellow Balloon"> Yellow Balloon<br/>
         <input type="radio" name="color" value="Blue Balloon"> Blue Balloon<br/>
+
         <input type='submit' value='Submit'/>
     </form>
 
+</form>
 </body>
 </html>
+
+
+
