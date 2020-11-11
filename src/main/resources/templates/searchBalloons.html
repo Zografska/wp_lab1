@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Balloons Search</title>
+</head>
+<body>
+<h2>Balloons that contain <th:block th:text="${search}"></th:block></h2>
+<ul>
+    <li th:each="balloon: ${balloons}"><th:block th:text="${balloon.getName()}"/> (<th:block th:text="${balloon.getDescription()}"/>)</li>
+</ul>
+</body>
+</html>
