@@ -53,7 +53,11 @@
         </tr>
     </table>
     <div>
-        <a href="/*">Log out</a>
+        <form  method="GET" action="/orders"  >
+            <button type="submit" >Add Order</button>
+        </form>
+        <a href="/b">Log out</a>
+        <a th:method="get" href="/orders"> Get Orders</a>
     </div>
 
 

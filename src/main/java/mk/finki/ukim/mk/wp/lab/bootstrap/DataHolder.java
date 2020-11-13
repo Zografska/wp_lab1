@@ -4,6 +4,7 @@ package mk.finki.ukim.mk.wp.lab.bootstrap;
 import lombok.Getter;
 import mk.finki.ukim.mk.wp.lab.model.Balloon;
 import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
+import mk.finki.ukim.mk.wp.lab.model.Order;
 import mk.finki.ukim.mk.wp.lab.model.User;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class DataHolder {
     public static List<Balloon> balloonList = new ArrayList<>();
     public static List<User> userList = new ArrayList();
     public static List<Manufacturer> manufacturerList = new ArrayList();
+    public static List<Order> orderList = new ArrayList<>();
     @PostConstruct
     public void init(){
         Manufacturer  manufacturer = new Manufacturer("Nike","America", "NY");
@@ -30,5 +32,7 @@ public class DataHolder {
         balloonList.add(new Balloon("Nice",":D",manufacturer));
         balloonList.add(new Balloon("Annoying","BlaBla",manufacturer));
         userList.add(new User("alex","alex","Aleksandra","Bul.Avnoj"));
+        orderList.add(new Order("Red","Small","Alex","Doma"));
+        orderList.add(new Order("Blue","Big","Alex","Doma"));
     }
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <h3 style="display: inline">Orders for user: </h3>
+    <h3 style="display: inline" th:text="${session.clientName}"></h3><br/>
+    <h3 style="display: inline">with address: </h3>
+    <h3 style="display: inline" th:text="${session.clientAddress}"></h3>
+</head>
+<body>
+<ul>
+    <li th:each="order : ${ordersList}">
+        <th:span th:text="${order.getBalloonColor()}"></th:span>
+        <th:span th:text=" ${order.getBalloonSize()} "></th:span>
+    </li>
+</ul> <br/>
+<a th:href="@{'/balloons'}" th:method="get">Order more ballons</a>
+</body>
+</html>

@@ -30,8 +30,8 @@ public class BalloonController {
         model.addAttribute("balloons",balloonService.listAll());
         return "listBalloons";
     }
-    @GetMapping("/add")
-    public String addBalloon(Model model){
+    @GetMapping("/add-form")
+    public String getAddBalloonPage(Model model){
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("balloon",null);
         return "add-balloon";
@@ -41,7 +41,7 @@ public class BalloonController {
         try{
             balloonService.saveOrUpdate(name,description,manuId);
         }catch (RuntimeException e){
-            return "redirect:/listBalloons?error="+e.getMessage();
+            return "redirect:/balloons?error="+e.getMessage();
         }
         return "redirect:/balloons";
     }
@@ -49,7 +49,7 @@ public class BalloonController {
     public String saveBalloon(@PathVariable long id, Model model){
         Optional<Balloon> optionalBalloon = balloonService.getBalloonById(id);
         if(optionalBalloon.isEmpty())
-            return "redirect:/listBalloons?=error"+"BalloonNotFound";
+            return "redirect:/balloons?=error"+"BalloonNotFound";
         Balloon balloon = optionalBalloon.get();
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("balloon",balloon);

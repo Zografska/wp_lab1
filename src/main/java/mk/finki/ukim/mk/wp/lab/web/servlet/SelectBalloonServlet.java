@@ -28,6 +28,8 @@ public class SelectBalloonServlet extends HttpServlet {
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
 
         String color = req.getParameter("color");
+        if (color==null || color.isEmpty())
+            resp.sendRedirect("/balloons");
         req.getSession().setAttribute("color",color);
 
         webContext.setVariable("color", color);

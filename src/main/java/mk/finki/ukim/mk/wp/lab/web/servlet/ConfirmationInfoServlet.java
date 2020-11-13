@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.wp.lab.web.servlet;
 
+import mk.finki.ukim.mk.wp.lab.service.OrderService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -13,23 +14,31 @@ import java.io.IOException;
 @WebServlet(name = "confirmation-servlet", urlPatterns = "/ConfirmationInfo")
 public class ConfirmationInfoServlet extends HttpServlet {
     private final SpringTemplateEngine springTemplateEngine;
+    private  final OrderService orderService;
 
-    public ConfirmationInfoServlet(SpringTemplateEngine springTemplateEngine) {
+    public ConfirmationInfoServlet(SpringTemplateEngine springTemplateEngine, OrderService orderService) {
         this.springTemplateEngine = springTemplateEngine;
+        this.orderService = orderService;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(req.getSession().getAttribute("color")==null)
             resp.sendRedirect("/*");
+        String clName = req.getParameter("clientName");
+        String clAddr = req.getParameter("clientAddress");
+        String clColor = (String)req.getSession().getAttribute("color");
+        String clSize = (String)req.getSession().getAttribute("size");
+        orderService.placeOrder(clColor,clSize,clName,clAddr);
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
-        webContext.setVariable("color", req.getSession().getAttribute("color"));
-        webContext.setVariable("size", req.getSession().getAttribute("size"));
-        webContext.setVariable("clientName", req.getParameter("clientName"));
-        webContext.setVariable("clientAddress", req.getParameter("clientAddress"));
+        webContext.setVariable("color", clColor );
+        webContext.setVariable("size", clSize);
+        webContext.setVariable("clientName",clName );
+        webContext.setVariable("clientAddress", clAddr);
         webContext.setVariable("ipAddress",req.getRemoteHost());
         webContext.setVariable("agent",req.getHeader("User-Agent"));
-        req.getSession().invalidate();
+        req.getSession().setAttribute("clientName",clName);
+        req.getSession().setAttribute("clientAddress", clAddr);
         springTemplateEngine.process("confirmationInfo.html",webContext,resp.getWriter());
     }
 }

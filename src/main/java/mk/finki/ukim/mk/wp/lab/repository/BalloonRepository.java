@@ -6,6 +6,7 @@ import mk.finki.ukim.mk.wp.lab.model.Balloon;
 import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class BalloonRepository {
                 .collect(Collectors.toList());
     }
     public Balloon saveOrUpdate(Balloon balloon){
+        DataHolder.balloonList.removeIf(b -> b.getName().equals(balloon.getName()));
         DataHolder.balloonList.add(balloon);
         return balloon;
     }
