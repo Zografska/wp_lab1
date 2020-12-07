@@ -21,10 +21,13 @@ public class BalloonOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
+        if(req.getSession().getAttribute("clientName")!=null)
+            resp.sendRedirect("/ConfirmationInfo");
         String size = req.getParameter("size");
         webContext.setVariable("size", size);
         webContext.setVariable("color",req.getSession().getAttribute("color"));
         req.getSession().setAttribute("size",size);
+
         springTemplateEngine.process("deliveryInfo.html",webContext,resp.getWriter());
     }
 }

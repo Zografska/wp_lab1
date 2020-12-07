@@ -37,7 +37,7 @@
 
     <form th:action="@{/ConfirmationInfo}" th:method="POST">
         <label for="clientName">Client Name:</label><br/>
-        <input type="text" id="clientName" name="clientName"/><br/>
+        <input type="text" id="clientName" name="clientName" th:autocomplete="${user!=null}? ${user} : ''" /><br/>
         <label for="clientAddress">Delivery Address:</label><br/>
         <textarea cols="40" rows="3" id="clientAddress" name="clientAddress"></textarea><br/>
         <input type="submit" th:text="Submit">

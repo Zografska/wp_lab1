@@ -32,7 +32,5 @@ public class DataHolder {
         balloonList.add(new Balloon("Nice",":D",manufacturer));
         balloonList.add(new Balloon("Annoying","BlaBla",manufacturer));
         userList.add(new User("alex","alex","Aleksandra","Bul.Avnoj"));
-        orderList.add(new Order("Red","Small","Alex","Doma"));
-        orderList.add(new Order("Blue","Big","Alex","Doma"));
     }
 }
