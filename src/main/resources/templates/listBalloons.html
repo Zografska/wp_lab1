@@ -15,7 +15,6 @@
         }
     </style>
 </head>
-
 <body>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container ">
@@ -45,9 +44,18 @@
                 <a class="btn btn-success btn-sm ml-3" href="/shopping-cart">
                     <i class="fa fa-shopping-cart"></i> Cart
                 </a>
-                <a class="btn btn-light btn-sm ml-3" href="/logout">
+
+                <span th:if="${session.user==null}">
+                    <a class="btn btn-light btn-sm ml-3" href="/login">
                     <i class="fa fa-shopping-cart"></i> Logout
                 </a>
+                </span>
+                <span th:if="${session.user!=null}">
+                    <a class="btn btn-light btn-sm ml-3" href="/logout">
+                    <i class="fa fa-shopping-cart"></i> Logout
+                </a>
+                </span>
+
             </form>
         </div>
     </div>

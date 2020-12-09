@@ -1,6 +1,7 @@
 package mk.finki.ukim.mk.wp.lab.service.impl;
 
 import mk.finki.ukim.mk.wp.lab.model.Order;
+import mk.finki.ukim.mk.wp.lab.model.User;
 import mk.finki.ukim.mk.wp.lab.repository.OrderRepository;
 import mk.finki.ukim.mk.wp.lab.service.OrderService;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order placeOrder(String balloonColor,String balloonSize, String clientName, String address) {
-        return orderRepository.saveOrder(new Order(balloonColor,balloonSize,clientName,address));
+    public Order placeOrder(String balloonColor,String balloonSize, User user) {
+        return orderRepository.saveOrder(new Order(balloonColor,balloonSize,user));
     }
 
     @Override

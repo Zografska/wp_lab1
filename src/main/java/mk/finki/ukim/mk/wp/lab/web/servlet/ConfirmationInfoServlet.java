@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.wp.lab.web.servlet;
 
+import mk.finki.ukim.mk.wp.lab.model.User;
 import mk.finki.ukim.mk.wp.lab.service.OrderService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -16,6 +17,7 @@ public class ConfirmationInfoServlet extends HttpServlet {
     private final SpringTemplateEngine springTemplateEngine;
     private  final OrderService orderService;
 
+
     public ConfirmationInfoServlet(SpringTemplateEngine springTemplateEngine, OrderService orderService) {
         this.springTemplateEngine = springTemplateEngine;
         this.orderService = orderService;
@@ -29,7 +31,9 @@ public class ConfirmationInfoServlet extends HttpServlet {
         String clAddr = req.getParameter("clientAddress");
         String clColor = (String)req.getSession().getAttribute("color");
         String clSize = (String)req.getSession().getAttribute("size");
-        orderService.placeOrder(clColor,clSize,clName,clAddr);
+        User user= new User(clName,clAddr);
+        req.getSession().setAttribute("user",user);
+        orderService.placeOrder(clColor,clSize,user);
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
         webContext.setVariable("color", clColor );
         webContext.setVariable("size", clSize);

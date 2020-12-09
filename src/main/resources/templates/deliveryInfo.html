@@ -1,66 +1,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>WP lab - Delivery Info</title>
-    <style type="text/css">
-        body {
-            width: 800px;
-            margin: auto;
-        }
-        table {
-            width: 100%;
-        }
-
-        table, td, th {
-            border: 1px solid black;
-            padding: 3px 2px;
-        }
-
-        section {
-            float: left;
-            margin: 0 1.5%;
-            width: 63%;
-        }
-
-        aside {
-            float: right;
-            margin: 0 1.5%;
-            width: 30%;
-        }
-    </style>
 </head>
 <body>
 <header>
-    <h1>Balloon Order page - Delivery information </h1>
+    <h2>Balloon Order page - Delivery information </h2>
 </header>
-<section>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">User Info</div>
+        <div class="panel-body">
+            <form th:action="@{/ConfirmationInfo}" th:method="POST">
+                <label for="clientName">UserName:</label><br/>
+                <input type="text" id="clientName" name="clientName" th:text="${user!=null}? ${user} : ''" /><br/>
+                <label for="clientAddress">Password</label><br/>
+                <input type="text" id="clientAddress" name="clientAddress"><br/>
+                <input type="submit">
+            </form>
+            <div class="panel panel-success">
+                <div class="panel-heading">You chose:</div>
+                <div class="panel-body">
+                    <h3>Balloon Color </h3>
+                    <p><th:block th:text="${color}"></th:block></p>
+                    <h3>Balloon Size </h3>
+                    <p><th:block th:text="${size}"></th:block></p>
+                </div>
+            </div>
 
-    <form th:action="@{/ConfirmationInfo}" th:method="POST">
-        <label for="clientName">Client Name:</label><br/>
-        <input type="text" id="clientName" name="clientName" th:autocomplete="${user!=null}? ${user} : ''" /><br/>
-        <label for="clientAddress">Delivery Address:</label><br/>
-        <textarea cols="40" rows="3" id="clientAddress" name="clientAddress"></textarea><br/>
-        <input type="submit" th:text="Submit">
-    </form>
+        </div>
+    </div>
+</div>
 
-</section>
-<aside>
-    <table>
-        <tr>
-            <th colspan="2">
-                Your Order Status
-            </th>
-        </tr>
-
-        <tr>
-            <td><b>Balloon Color </b></td>
-            <td><th:block th:text="${color}"></th:block></td>
-        </tr>
-        <tr>
-            <td><b>Balloon Size </b></td>
-            <td><th:block th:text="${size}"></th:block></td>
-        </tr>
-    </table>
-</aside>
 </body>
 </html>

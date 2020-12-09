@@ -22,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User addUser(String password, String username, String name, String address) {
-        User user= new User(password, username, name, address);
+        User user= new User(username,password);
         return userRepository.addUser(user);
     }
 }
