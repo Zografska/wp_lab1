@@ -24,6 +24,8 @@ public class UserController {
         this.authService = authService;
     }
 
+
+
     @GetMapping
     private String getLoginPage(){
         return "login";
@@ -36,12 +38,35 @@ public class UserController {
                     ,request.getParameter("password"))
                     .orElseThrow(()-> new LoginFailException("Password or username is wrong"));
             request.getSession().setAttribute("user",user);
-            return "/bravo";
+            return "redirect:/balloons";
         }catch (Exception e){
         model.addAttribute("hasError", true);
         model.addAttribute("error", "Login Error");
         return "/login";
         }
-
+    }
+    @GetMapping("/logout")
+    private String logout(HttpServletRequest request){
+        request.getSession().setAttribute("user",null);
+        return "redirect:/balloons";
+    }
+    @GetMapping("/register")
+    private String getRegisterPage(){
+        return "register";
+    }
+    @PostMapping("/register")
+    public String registerUser(HttpServletRequest req, Model model){
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        if(authService.validRegistration(username))
+        {
+            User  user = new User(username,password);
+            authService.addUser(user);
+            req.getSession().setAttribute("user",new User(password,username) );
+            return "redirect:/balloons";
+        }
+        model.addAttribute("hasError",true);
+        model.addAttribute("error","Username taken :(");
+        return "register";
     }
 }

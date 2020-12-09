@@ -1,38 +1,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Balloon Order page - Balloon Size</title>
-    <style type = "text/css">
-        body {
-            width: 800px;
-            margin: auto;
-        }
-        table {
-            width:100%;
-        }
-        table, td, th {
-            border: 1px solid black;
-            padding:3px 2px;
-        }
-        section {
-            float: left;
-            margin: 0 1.5%;
-            width: 63%;
-        }
-        aside {
-            float: right;
-            margin: 0 1.5%;
-            width: 30%;
-        }
-    </style>
+
 </head>
 <body>
 <header>
     <h1>Balloon Order page - Select Balloon Size </h1>
 </header>
-<section>
+
+    <div class="container">
     <h2>Choose balloon size:</h2>
-    <form th:action="@{/BalloonOrder.do}" th:method="POST">
+    <form th:action="@{'/balloons/confirm-info'}" th:method="POST">
         <input type="radio" name="size" value="Small"> Small <br/>
         <input type="radio" name="size" value="Medium"> Medium <br/>
         <input type="radio" name="size" value="Big"> Big <br/>
@@ -40,22 +23,26 @@
         <input type='submit' value='Submit'/>
     </form>
 
-    <br/>
-    <a href="/templates/deliveryInfo.html">Submit</a>
-</section>
-<aside>
-    <table>
+    <table class="table table-hover">
+        <thead>
         <tr>
-            <th colspan="2">
+            <th >
                 Your Order Status
             </th>
+            <th >
+                Color
+            </th>
+
         </tr>
+        </thead>
+        <tbody>
         <tr>
             <td><b>Balloon Type </b></td>
-            <td><th:block th:text="${color}"></th:block></td>
+            <td><th:block th:text="${session.color}"></th:block></td>
         </tr>
+        </tbody>
     </table>
-</aside>
+</div>
 
 </body>
 </html>

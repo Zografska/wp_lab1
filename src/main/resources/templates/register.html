@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Register User</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>WP lab - Delivery Info</title>
 </head>
 <body>
+<header>
+    <h2>Balloon Order page - Delivery information </h2>
+</header>
+<div class="container">
+    <label th:if="${hasError}" >
+        <span th:text="${error}"></span>
+    </label>
+    <div class="panel panel-primary">
+        <div class="panel-heading">User Info</div>
+        <div class="panel-body">
+            <form th:action="@{/user/register}" th:method="POST">
+                <label >UserName:</label><br/>
+                <input type="text" id="username" name="username" /><br/>
+                <label >Password</label><br/>
+                <input type="password" id="password" name="password"><br/>
+                <input type="submit">
+            </form>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -2,12 +2,14 @@ package mk.finki.ukim.mk.wp.lab.web.controllers;
 
 import mk.finki.ukim.mk.wp.lab.model.Balloon;
 import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
+import mk.finki.ukim.mk.wp.lab.model.User;
 import mk.finki.ukim.mk.wp.lab.service.BalloonService;
 import mk.finki.ukim.mk.wp.lab.service.ManufacturerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
@@ -21,11 +23,18 @@ public class BalloonController {
     }
 
     @GetMapping
-    public String getBalloonsPage(@RequestParam(required = false) String error, Model model){
-        if (error!=null && error.isEmpty() )
+    public String getBalloonsPage(@RequestParam(required = false) String error,
+                                  @RequestParam(required = false) String search,
+                                  Model model){
+        if (error!=null && !error.isEmpty() )
         {
            model.addAttribute("hasError", true);
            model.addAttribute("error",error);
+        }
+        if(search!=null && !search.isEmpty())
+        {
+            model.addAttribute("balloons",balloonService.searchByNameOrDescription(search));
+            return "listBalloons";
         }
         model.addAttribute("balloons",balloonService.listAll());
         return "listBalloons";
@@ -60,5 +69,24 @@ public class BalloonController {
         this.balloonService.deleteBalloon(id);
         return "redirect:/balloons";
     }
+    @PostMapping("/select-balloon")
+    public String selectBalloon(@RequestParam String color, HttpServletRequest request, Model model){
+        request.getSession().setAttribute("color", color);
+        return "selectBalloonSize";
+    }
+//    @GetMapping("/search-balloon")
+//    public String searchBalloon(@RequestParam String searchQuery, Model model){
+//        model.addAttribute("balloons", balloonService.searchByNameOrDescription("searchQuery"));
+//        return "listBalloons";
+//    }
+    @PostMapping("/confirm-info")
+    public String ConfirmInfo(@RequestParam String size,HttpServletRequest request, Model model)
+    {
+        model.addAttribute("ipAddress",request.getRemoteHost());
+        model.addAttribute("agent",request.getHeader("User-Agent"));
+        request.getSession().setAttribute("size",size);
+        return "confirmationInfo";
+    }
+
 
 }

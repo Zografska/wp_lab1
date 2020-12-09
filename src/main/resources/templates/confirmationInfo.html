@@ -22,6 +22,7 @@
         <h1>Balloon Order page - Order confirmation </h1>
     </header>
     <table>
+
         <tr>
             <th colspan="2">
                 Your Order Status
@@ -29,11 +30,7 @@
         </tr>
         <tr>
             <td><b>Client Name </b></td>
-            <td><th:block th:text="${clientName}"></th:block></td>
-        </tr>
-        <tr>
-            <td><b>Client Address </b></td>
-            <td><th:block th:text="${clientAddress}"></th:block></td>
+            <td><th:block th:text="${session.user.getUsername()}"></th:block></td>
         </tr>
         <tr>
             <td><b>Client IP Address</b></td>
@@ -45,19 +42,17 @@
         </tr>
         <tr>
             <td><b>Balloon Color </b></td>
-            <td><th:block th:text="${color}"></th:block></td>
+            <td><th:block th:text="${session.color}"></th:block></td>
         </tr>
         <tr>
             <td><b>Balloon Size </b></td>
-            <td><th:block th:text="${size}"></th:block></td>
+            <td><th:block th:text="${session.size}"></th:block></td>
         </tr>
     </table>
     <div>
-        <form  method="GET" action="/orders"  >
+        <form  method="post" action="/orders/add-order"  >
             <button type="submit" >Add Order</button>
         </form>
-        <a href="/b">Log out</a>
-        <a th:method="get" href="/orders"> Get Orders</a>
     </div>
 
 

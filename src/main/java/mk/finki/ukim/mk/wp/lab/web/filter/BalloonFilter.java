@@ -27,6 +27,7 @@ public class BalloonFilter implements Filter {
 //                &&!path.contains("edit-form");
         if (!path.contains("/balloons")
                 && !path.contains("/orders")
+                && !path.contains("/user")
                 && !path.equals("/selectBalloon")
                 && (color==null || color.isEmpty())) {
             response.sendRedirect("/balloons");

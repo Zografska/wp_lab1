@@ -24,6 +24,16 @@ public class UserRepository {
         DataHolder.userList.add(user);
         return user;
     }
+    public boolean ValidRegister(String username){
+        return  DataHolder.userList.stream().noneMatch(user -> user.getUsername().equals(username));
+    }
+    public void addOrderToUser(Order o, String username)
+    {
+        User user = findUser(username).get();
+        DataHolder.userList.removeIf(u -> u.getUsername().equals(user.getUsername()));
+        user.getShoppingCart().getOrders().add(o);
+        DataHolder.userList.add(user);
+    }
 
 
 

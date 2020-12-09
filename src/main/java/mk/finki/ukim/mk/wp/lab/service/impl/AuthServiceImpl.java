@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.wp.lab.service.impl;
 
+import mk.finki.ukim.mk.wp.lab.model.Order;
 import mk.finki.ukim.mk.wp.lab.model.User;
 import mk.finki.ukim.mk.wp.lab.repository.UserRepository;
 import mk.finki.ukim.mk.wp.lab.service.AuthService;
@@ -9,7 +10,12 @@ import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public AuthServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public Optional<User> findUser(String username) {
         return userRepository.findUser(username);
@@ -21,8 +27,18 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public User addUser(String password, String username, String name, String address) {
-        User user= new User(username,password);
+    public User addUser(User user) {
         return userRepository.addUser(user);
     }
+
+    @Override
+    public boolean validRegistration(String username) {
+        return userRepository.ValidRegister(username);
+    }
+
+    @Override
+    public void addOrder(String username, Order order) {
+        userRepository.addOrderToUser(order,username);
+    }
+
 }

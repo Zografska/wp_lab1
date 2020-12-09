@@ -1,10 +1,12 @@
 package mk.finki.ukim.mk.wp.lab.web.controllers;
 
 import mk.finki.ukim.mk.wp.lab.model.Order;
+import mk.finki.ukim.mk.wp.lab.model.User;
 import mk.finki.ukim.mk.wp.lab.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +23,18 @@ public class OrderController {
 
     @GetMapping
     public String ShowOrders(HttpServletRequest req,Model model){
-    String clientName = (String)req.getSession().getAttribute("clientName");
+    User user = (User)req.getSession().getAttribute("user");
     List<Order> orderList = orderService
-            .findOrdersByClientName(clientName);
-    model.addAttribute("clientName",clientName);
+            .findOrdersByClientName(user.getUsername());
     model.addAttribute("ordersList",orderList);
     return "userOrders";
+    }
+    @PostMapping("add-order")
+    public String addOrder(HttpServletRequest request){
+
+        orderService.placeOrder((String)request.getSession().getAttribute("color"),
+                (String)request.getSession().getAttribute("size"),
+                (User)request.getSession().getAttribute("user"));
+        return "redirect:/orders";
     }
 }
