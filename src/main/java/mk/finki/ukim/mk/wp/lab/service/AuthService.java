@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface AuthService {
     Optional<User> findUser(String username);
     Optional<User> successfulLogin(String username, String password);
-    User addUser(User user);
+    User addUser(String username, String password);
     boolean validRegistration(String username);
     void addOrder(String username, Order order);
 }

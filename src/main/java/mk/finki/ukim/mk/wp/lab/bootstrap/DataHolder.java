@@ -29,7 +29,7 @@ public class DataHolder {
         balloonList.add(new Balloon("Bad","El Diablo",manufacturer));
         balloonList.add(new Balloon("Nice",":D",manufacturer));
         balloonList.add(new Balloon("Annoying","BlaBla",manufacturer));
-        userList.add(new User("aleks","aleks"));
+       // userList.add(new User("aleks","aleks"));
 
     }
 }

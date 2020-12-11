@@ -10,5 +10,5 @@ public interface BalloonService {
     List<Balloon> searchByNameOrDescription(String text);
     Balloon saveOrUpdate(String name, String description, Long ManuId);
     void deleteBalloon(Long id);
-    public Optional<Balloon> getBalloonById(Long id);
+    Balloon getBalloonById(Long id);
 }

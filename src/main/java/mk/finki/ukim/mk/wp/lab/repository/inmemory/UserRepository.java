@@ -1,4 +1,4 @@
-package mk.finki.ukim.mk.wp.lab.repository;
+package mk.finki.ukim.mk.wp.lab.repository.inmemory;
 
 import mk.finki.ukim.mk.wp.lab.bootstrap.DataHolder;
 import mk.finki.ukim.mk.wp.lab.model.Order;
@@ -31,7 +31,7 @@ public class UserRepository {
     {
         User user = findUser(username).get();
         DataHolder.userList.removeIf(u -> u.getUsername().equals(user.getUsername()));
-        user.getShoppingCart().getOrders().add(o);
+        //user.getShoppingCart().getOrders().add(o);
         DataHolder.userList.add(user);
     }
 

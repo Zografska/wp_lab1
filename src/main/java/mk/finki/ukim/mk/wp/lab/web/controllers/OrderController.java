@@ -2,6 +2,7 @@ package mk.finki.ukim.mk.wp.lab.web.controllers;
 
 import mk.finki.ukim.mk.wp.lab.model.Order;
 import mk.finki.ukim.mk.wp.lab.model.User;
+import mk.finki.ukim.mk.wp.lab.service.AuthService;
 import mk.finki.ukim.mk.wp.lab.service.OrderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,25 +17,27 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
-
-    public OrderController(OrderService orderService) {
+    private final AuthService authService;
+    public OrderController(OrderService orderService, AuthService authService) {
         this.orderService = orderService;
+        this.authService = authService;
     }
 
     @GetMapping
     public String ShowOrders(HttpServletRequest req,Model model){
-    User user = (User)req.getSession().getAttribute("user");
+        String username=(String)req.getSession().getAttribute("user");
+    User user = authService.findUser(username).get();
     List<Order> orderList = orderService
-            .findOrdersByClientName(user.getUsername());
+            .findOrdersByUserId(user.getId());
     model.addAttribute("ordersList",orderList);
     return "userOrders";
     }
     @PostMapping("add-order")
     public String addOrder(HttpServletRequest request){
 
-        orderService.placeOrder((String)request.getSession().getAttribute("color"),
-                (String)request.getSession().getAttribute("size"),
-                (User)request.getSession().getAttribute("user"));
+        orderService.placeOrder((String)(request.getSession().getAttribute("color")),
+                (String)(request.getSession().getAttribute("size")),
+                (String)(request.getSession().getAttribute("user")));
         return "redirect:/orders";
     }
 }

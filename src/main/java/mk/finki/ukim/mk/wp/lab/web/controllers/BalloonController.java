@@ -47,19 +47,15 @@ public class BalloonController {
     }
     @PostMapping("/add")
     public String saveBalloon(@RequestParam String name, @RequestParam String description, @RequestParam Long manuId){
-        try{
             balloonService.saveOrUpdate(name,description,manuId);
-        }catch (RuntimeException e){
-            return "redirect:/balloons?error="+e.getMessage();
-        }
         return "redirect:/balloons";
     }
     @PostMapping("/edit-form/{id}")
     public String saveBalloon(@PathVariable long id, Model model){
-        Optional<Balloon> optionalBalloon = balloonService.getBalloonById(id);
-        if(optionalBalloon.isEmpty())
+        Balloon balloon = balloonService.getBalloonById(id);
+        if(balloon==null)
             return "redirect:/balloons?=error"+"BalloonNotFound";
-        Balloon balloon = optionalBalloon.get();
+
         model.addAttribute("manufacturers", manufacturerService.findAll());
         model.addAttribute("balloon",balloon);
         return "add-balloon";

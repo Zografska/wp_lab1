@@ -1,7 +1,7 @@
 package mk.finki.ukim.mk.wp.lab.service.impl;
 
 import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
-import mk.finki.ukim.mk.wp.lab.repository.ManufactorerRepository;
+import mk.finki.ukim.mk.wp.lab.repository.jpa.JpaManufacturerRepository;
 import mk.finki.ukim.mk.wp.lab.service.ManufacturerService;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +10,19 @@ import java.util.Optional;
 
 @Service
 public class ManufacturerServiceImpl implements ManufacturerService {
-    private final ManufactorerRepository manufactorerRepository;
+    private final JpaManufacturerRepository manufacturerRepository;
 
-    public ManufacturerServiceImpl(ManufactorerRepository manufactorerRepository) {
-        this.manufactorerRepository = manufactorerRepository;
+    public ManufacturerServiceImpl(JpaManufacturerRepository manufacturerRepository) {
+        this.manufacturerRepository = manufacturerRepository;
     }
 
     @Override
     public List<Manufacturer> findAll() {
-        return manufactorerRepository.findAll();
+        return manufacturerRepository.findAll();
     }
 
     @Override
     public Optional<Manufacturer> findById(Long id) {
-        return manufactorerRepository.findById(id);
+        return manufacturerRepository.findById(id);
     }
 }

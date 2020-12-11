@@ -1,44 +1,50 @@
 package mk.finki.ukim.mk.wp.lab.service.impl;
 
 import mk.finki.ukim.mk.wp.lab.model.Order;
+import mk.finki.ukim.mk.wp.lab.model.ShoppingCart;
 import mk.finki.ukim.mk.wp.lab.model.User;
-import mk.finki.ukim.mk.wp.lab.repository.UserRepository;
+import mk.finki.ukim.mk.wp.lab.repository.jpa.JpaUserRepository;
 import mk.finki.ukim.mk.wp.lab.service.AuthService;
+import mk.finki.ukim.mk.wp.lab.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-    private final UserRepository userRepository;
+    private final JpaUserRepository userRepository;
+    private final ShoppingCartService shoppingCartService;
 
-    public AuthServiceImpl(UserRepository userRepository) {
+    public AuthServiceImpl(JpaUserRepository userRepository, ShoppingCartService shoppingCartService) {
         this.userRepository = userRepository;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Override
     public Optional<User> findUser(String username) {
-        return userRepository.findUser(username);
+
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public Optional<User> successfulLogin(String username, String password) {
-        return userRepository.successfulLogin(username,password);
+        return userRepository.findByUsernameAndPassword(username,password);
     }
 
     @Override
-    public User addUser(User user) {
-        return userRepository.addUser(user);
+    public User addUser(String username,String password) {
+        ShoppingCart shoppingCart = shoppingCartService.create();
+        return userRepository.save(new User(username,password,shoppingCart));
     }
 
     @Override
     public boolean validRegistration(String username) {
-        return userRepository.ValidRegister(username);
+        return userRepository.findByUsername(username).isEmpty();
     }
 
     @Override
     public void addOrder(String username, Order order) {
-        userRepository.addOrderToUser(order,username);
+      //  userRepository.findByUsername(username).get().getShoppingCart().getOrders().add(order);
     }
 
 }

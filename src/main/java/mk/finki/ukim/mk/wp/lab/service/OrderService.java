@@ -7,6 +7,6 @@ import java.util.List;
 
 
 public interface OrderService{
-    Order placeOrder(String balloonColor,String balloonSize, User user);
-    List<Order> findOrdersByClientName(String clientName);
+    Order placeOrder(String balloonColor,String balloonSize, String user);
+    List<Order> findOrdersByUserId(Long userId);
 }

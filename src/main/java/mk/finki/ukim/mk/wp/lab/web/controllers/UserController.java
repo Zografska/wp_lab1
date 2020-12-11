@@ -60,9 +60,10 @@ public class UserController {
         String password = req.getParameter("password");
         if(authService.validRegistration(username))
         {
-            User  user = new User(username,password);
-            authService.addUser(user);
-            req.getSession().setAttribute("user",new User(password,username) );
+
+            authService.addUser(username,password);
+            req.getSession().setAttribute("user",username );
+            // pazi ovoj user vo sesija ima razlicen id od toj kreiran tuka :)
             return "redirect:/balloons";
         }
         model.addAttribute("hasError",true);

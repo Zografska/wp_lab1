@@ -31,9 +31,9 @@ public class ConfirmationInfoServlet extends HttpServlet {
         String clAddr = req.getParameter("clientAddress");
         String clColor = (String)req.getSession().getAttribute("color");
         String clSize = (String)req.getSession().getAttribute("size");
-        User user= new User(clName,clAddr);
-        req.getSession().setAttribute("user",user);
-        orderService.placeOrder(clColor,clSize,user);
+        //User user= new User(clName,clAddr);
+       // req.getSession().setAttribute("user",user);
+        orderService.placeOrder(clColor,clSize,clName);
         WebContext webContext = new WebContext(req,resp, req.getServletContext());
         webContext.setVariable("color", clColor );
         webContext.setVariable("size", clSize);

@@ -3,49 +3,48 @@ package mk.finki.ukim.mk.wp.lab.service.impl;
 import mk.finki.ukim.mk.wp.lab.model.Balloon;
 import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
 import mk.finki.ukim.mk.wp.lab.model.exceptions.ManufacturerNotFoundException;
-import mk.finki.ukim.mk.wp.lab.repository.BalloonRepository;
-import mk.finki.ukim.mk.wp.lab.repository.ManufactorerRepository;
+import mk.finki.ukim.mk.wp.lab.repository.jpa.JpaBalloonRepository;
+import mk.finki.ukim.mk.wp.lab.repository.jpa.JpaManufacturerRepository;
 import mk.finki.ukim.mk.wp.lab.service.BalloonService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 @Service
 public class BalloonServiceImpl implements BalloonService {
 
-    BalloonRepository balloonRepository;
-    ManufactorerRepository manufactorerRepository;
+    JpaBalloonRepository balloonRepository;
+    JpaManufacturerRepository manufacturerRepository;
 
-    public BalloonServiceImpl(BalloonRepository balloonRepository,ManufactorerRepository manufactorerRepository) {
+    public BalloonServiceImpl(JpaBalloonRepository balloonRepository, JpaManufacturerRepository manufacturerRepository) {
         this.balloonRepository = balloonRepository;
-        this.manufactorerRepository = manufactorerRepository;
+        this.manufacturerRepository = manufacturerRepository;
     }
 
     @Override
     public List<Balloon> listAll() {
-        return balloonRepository.findAllBalloons();
+        return balloonRepository.findAll();
     }
 
     @Override
     public List<Balloon> searchByNameOrDescription(String text) {
-        return balloonRepository.findAllByNameOrDescription(text);
+        return balloonRepository.findAllByNameLike(text);
     }
 
     @Override
     public Balloon saveOrUpdate(String name, String description, Long ManuId) {
-        Manufacturer manufacturer = manufactorerRepository.findById(ManuId).orElseThrow(()-> new ManufacturerNotFoundException(ManuId));
-        return balloonRepository.saveOrUpdate(new Balloon(name, description,manufacturer));
+        Manufacturer manufacturer = manufacturerRepository.findById(ManuId).get();
+        return balloonRepository.save(new Balloon(name, description,manufacturer));
 
     }
 
     @Override
     public void deleteBalloon(Long id) {
-        balloonRepository.deleteBalloon(id);
+        balloonRepository.deleteById(id);
     }
 
     @Override
-    public Optional<Balloon> getBalloonById(Long id) {
-        return balloonRepository.getBalloonById(id);
+    public Balloon getBalloonById(Long id) {
+        return balloonRepository.getOne(id);
     }
 }
