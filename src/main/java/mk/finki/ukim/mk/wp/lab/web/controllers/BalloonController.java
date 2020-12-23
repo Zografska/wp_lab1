@@ -36,14 +36,16 @@ public class BalloonController {
             model.addAttribute("balloons",balloonService.searchByNameOrDescription(search));
             return "listBalloons";
         }
+        model.addAttribute("bodyContent","listBalloons");
         model.addAttribute("balloons",balloonService.listAll());
-        return "listBalloons";
+        return "master-template";
     }
     @GetMapping("/add-form")
     public String getAddBalloonPage(Model model){
         model.addAttribute("manufacturers", manufacturerService.findAll());
+        model.addAttribute("bodyContent","add-balloon");
         model.addAttribute("balloon",null);
-        return "add-balloon";
+        return "master-template";
     }
     @PostMapping("/add")
     public String saveBalloon(@RequestParam String name, @RequestParam String description, @RequestParam Long manuId){

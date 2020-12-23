@@ -25,7 +25,8 @@ public class OrderController {
 
     @GetMapping
     public String ShowOrders(HttpServletRequest req,Model model){
-        String username=(String)req.getSession().getAttribute("user");
+        //(String)req.getSession().getAttribute("user");
+        String username="zogra";
     User user = authService.findUser(username).get();
     List<Order> orderList = orderService
             .findOrdersByUserId(user.getId());
@@ -37,7 +38,8 @@ public class OrderController {
 
         orderService.placeOrder((String)(request.getSession().getAttribute("color")),
                 (String)(request.getSession().getAttribute("size")),
-                (String)(request.getSession().getAttribute("user")));
+                "zogra");
+//(String)(request.getSession().getAttribute("user")
         return "redirect:/orders";
     }
 }
