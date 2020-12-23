@@ -8,7 +8,11 @@ import mk.finki.ukim.mk.wp.lab.repository.jpa.JpaManufacturerRepository;
 import mk.finki.ukim.mk.wp.lab.service.BalloonService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BalloonServiceImpl implements BalloonService {
@@ -28,7 +32,15 @@ public class BalloonServiceImpl implements BalloonService {
 
     @Override
     public List<Balloon> searchByNameOrDescription(String text) {
-        return balloonRepository.findAllByNameLike(text);
+        Set<Balloon> balloons = new HashSet<>();
+        balloons.addAll(balloonRepository.findAllByNameLike(text));
+        balloons.addAll(balloonRepository.findAllByDescriptionLike(text));
+        for (Manufacturer m :
+                manufacturerRepository.findAllByNameLike(text)) {
+            balloons.addAll(balloonRepository.findByManufacturer(m));
+        }
+
+        return new ArrayList<>(balloons);
     }
 
     @Override

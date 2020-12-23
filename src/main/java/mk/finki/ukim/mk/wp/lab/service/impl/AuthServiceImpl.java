@@ -36,6 +36,11 @@ public class AuthServiceImpl implements AuthService {
         ShoppingCart shoppingCart = shoppingCartService.create();
         return userRepository.save(new User(username,password,shoppingCart));
     }
+//    @Override
+//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+//        return userRepository.findByUsername(s).orElseThrow(()->new UsernameNotFoundException(s));
+//    }
+
 
     @Override
     public boolean validRegistration(String username) {

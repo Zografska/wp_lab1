@@ -3,6 +3,8 @@ package mk.finki.ukim.mk.wp.lab.repository.jpa;
 import mk.finki.ukim.mk.wp.lab.model.Manufacturer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JpaManufacturerRepository extends JpaRepository<Manufacturer,Long> {
+import java.util.List;
 
+public interface JpaManufacturerRepository extends JpaRepository<Manufacturer,Long> {
+        List<Manufacturer> findAllByNameLike(String search);
 }
